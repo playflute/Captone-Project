@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript">
+        //function formatterdate(val) {
+        //    if (val != null) {
+        //        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+        //        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        //        var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        //        var hours = date.getHours();
+        //        var minutes = date.getMinutes();
+        //        var seconds = date.getSeconds();
+        //        // var milliseconds = date.getMilliseconds();
+        //        return date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+        //    }
+        //}
+
+        //alert(formatterdate(1381688802000));
+        //console.log(formatterdate("/Date(1381688802000)"));
+        s = '/Date(1381688802000+1000)/ ';
+        s.replace(/Date\([\d+]+\)/, function (a) { eval('d = new ' + a) });
+        alert(d);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

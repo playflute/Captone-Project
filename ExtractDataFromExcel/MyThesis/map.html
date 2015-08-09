@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="Javascript/jquery-2.1.3.min.js"></script>
+    <style type="text/css">
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js">
+    </script>
+    <script src="Javascript/cordova.js"></script>
+    <script src="Javascript/gmaps.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            ws = new WebSocket("ws://austindashboard.azurewebsites.net/Action/GeolocationHandler.ashx");
+            var map=new GMaps({
+                div: '#map-canvas',
+                lat: -33.885666199,
+                lng: 151.1939643
+            });
+             
+            //map.addMarker({
+            //    lat: -33.887,
+            //    lng: 151.1939643,
+            //    tile: 'uncle mario',
+            //    icon: '/images/mario.jpg',
+            //    infoWindow: {
+            //        content:'<p>Austin->The dungeon master</p>'
+            //    }
+            //});
+            navigator.geolocation.getCurrentPosition(showPosition);
+            
+            function showPosition(position)
+            {
+                global_position = position;
+                startWatch();
+                map.addMarker({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    tile: 'mushroom',
+                    icon: '/images/mushroom.jpg',
+                    infoWindow: {
+                        content: '<p>This is my real location</p>'
+                    }
+                });
+
+                var coord_string = "{\"Lat\":\"" + global_position.coords.latitude + "\",\"Lng\":\"" + global_position.coords.longitude + "\"" + ",\"Flag\":\"n\"" + "}";
+                ws.send(coord_string);
+                ws.onmessage = function (evt) {
+                    
+                    if(evt.data=="one_guy_quit")
+                    {
+                        //情况1,有人退出了或者链接断了
+                        map.removeMarkers();//先移除左右已经存在的marker
+                        //alert("new guy comes,all markers deleted");
+                        ws.send(coord_string);
+                    
+                    }
+                    else
+                    {
+                        //情况2服务器请求新位置
+                        if (evt.data == "gather_all")
+                        {
+                            navigator.geolocation.getCurrentPosition(send_own);
+                            //ws.send(coord_string);
+                        }
+                        //情况3，服务器广播json
+                        else
+                        {
+                            map.removeMarkers();
+                            var json_array = eval(evt.data);
+                            //alert(json_array.length);
+                            for (var i = 0; i < json_array.length; i++) {
+                                map.addMarker({
+                                    lat: json_array[i].Lat,
+                                    lng: json_array[i].Lng,
+                                    tile: 'mushroom',
+                                    icon: '/images/mushroom.jpg',
+
+                                });
+                            }
+                        }
+                    }
+                };
+                //alert(coord_string);
+                
+            }
+            //$("#btn").bind("click", function () {
+            //    map.addMarker({
+            //        lat: -33.886,
+            //        lng: 151.1939643,
+            //        tile: 'mushroom',
+            //        icon: '/images/mushroom.jpg'
+            //    });
+            //});
+
+            $("#btnClean").bind("click", function () {
+                map.removeMarkers();
+            });
+        });
+
+        function startWatch(){
+            if (navigator.geolocation) {
+                var optn = {
+                    enableHighAccuracy : true,
+                    timeout : Infinity,
+                    maximumAge : 0
+                };
+                watchId = navigator.geolocation.watchPosition(updatePosition);
+            } else {
+                //alert('Geolocation is not supported in your browser，please change to newer version browsers');
+            }
+        }
+        function stopWatch() {
+               if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+            }
+        }
+
+        function updatePosition()
+        {
+            //navigator.geolocation.getCurrentPosition(go_on_update);
+            ws.send("m");
+
+        }
+        //function go_on_update(pos)
+        //{
+        //    var coord_string_m = "{\"Lat\":\"" + pos.coords.latitude + "\",\"Lng\":\"" + pos.coords.longitude + "\"" + ",\"Flag\":\"m\"" + "}";
+        //    //alert(coord_string_m);
+        //    ws.send(coord_string_m);
+        //}
+        function send_own(p)
+        {
+            var coord_string_own = "{\"Lat\":\"" + p.coords.latitude + "\",\"Lng\":\"" + p.coords.longitude + "\"" + ",\"Flag\":\"n\"" + "}";
+            //alert(coord_string);
+            ws.send(coord_string_own);
+        }
+    </script>
+</head>
+<body>
+    <div id="map-canvas"></div>
+    <!--<button id="btn">click me and update all user's location</button>
+    <button id="btnClean">click me and clean all the marker</button>-->
+</body>
+</html>

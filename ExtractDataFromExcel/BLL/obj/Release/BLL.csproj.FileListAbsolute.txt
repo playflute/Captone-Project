@@ -1,0 +1,9 @@
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\bin\Release\BLL.dll
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\bin\Release\BLL.pdb
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\bin\Release\DAL.dll
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\bin\Release\MODEL.dll
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\bin\Release\DAL.pdb
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\bin\Release\MODEL.pdb
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\obj\Release\BLL.csprojResolveAssemblyReference.cache
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\obj\Release\BLL.dll
+E:\ProjectReport-master\ProjectReport-master\ExtractDataFromExcel\BLL\obj\Release\BLL.pdb

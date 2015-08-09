@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="austindashboard" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^E:\\ProjectReport-master\\ProjectReport-master\\ExtractDataFromExcel\\MyThesis\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^E:\\ProjectReport-master\\ProjectReport-master\\ExtractDataFromExcel\\MyThesis\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="connStr-Web.config Connection String" description="" value="Data Source=ZHIGANGZHANG\SQLEXPRESS;Initial Catalog=Cisco;Integrated Security=True" tags="">
+    <parameterEntry kind="XmlFile" scope="E:\\ProjectReport-master\\ProjectReport-master\\ExtractDataFromExcel\\MyThesis\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='connStr']/@connectionString" />
+  </parameter>
+</parameters>
